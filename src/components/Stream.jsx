@@ -23,7 +23,7 @@ import {
   createStyles,
   Progress,
 } from "@mantine/core";
-import { IconCopy, IconCheck } from "@tabler/icons-react";
+import { IconCopy, IconCheck, IconScreenShare } from "@tabler/icons-react";
 import { useInterval } from "@mantine/hooks";
 import { DeSoIdentityContext } from "react-deso-protocol";
 
@@ -184,11 +184,47 @@ export const Stream = () => {
   return (
     <Paper shadow="sm" p="lg" withBorder>
       <>
+      <Group>
+      <CopyButton
+                      value={`https://waves-2.vercel.app/wave/${currentUser.ProfileEntryResponse.Username}`}
+                      timeout={2000}
+                    >
+                      {({ copied, copy }) => (
+                        <Button
+                        size="xs" 
+                          color={copied ? "teal" : "blue"}
+                          onClick={copy}
+                        >
+                          {copied ? (
+                            <>
+                            <Tooltip label="Copied Wave">
+                                
+                                
+                                <IconCheck size={16} />
+                                </Tooltip>
+                            </>
+                          ) : (
+                            <>
+                      <Tooltip label="Share your Wave">
+                              
+                               
+                                <IconScreenShare size={16} />
+                                </Tooltip>
+                            </>
+                          )}
+                        </Button>
+                      )}
+                    </CopyButton>
+                  
+       
         <Tooltip label="Clear Idle Wave from your profile">
-          <Button size="xs" color="red" radius="xl" onClick={clearWave}>
+          <Button size="xs" color="red" onClick={clearWave}>
             Clear Wave
           </Button>
-        </Tooltip>
+          </Tooltip>
+        
+        
+                    </Group>
         <Space h="md" />
         <Center>
           <Text fz="lg" fw={777} c="dimmed" truncate>

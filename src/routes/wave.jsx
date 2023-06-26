@@ -8,7 +8,8 @@ import {
   IconMessageCircle,
   IconScriptPlus,
   IconScriptMinus,
-  IconMessageShare
+  IconMessageShare,
+  IconScreenShare, IconCheck
 } from "@tabler/icons-react";
 import {
   getFollowersForUser,
@@ -23,6 +24,8 @@ import {
   sendDiamonds,
 } from "deso-protocol";
 import {
+  CopyButton,
+
   Avatar,
   Paper,
   Group,
@@ -435,7 +438,40 @@ export const Wave = () => {
           )}
         </Card.Section>
         <Space h="md" />
+        <Group position="right">
+        <CopyButton
+                      value={`https://waves-2.vercel.app/wave/${userName}`}
+                      timeout={2000}
+                    >
+                      {({ copied, copy }) => (
+                        <Button
+                        size="xs" 
+                          color={copied ? "teal" : "blue"}
+                          onClick={copy}
+                        >
+                          {copied ? (
+                            <>
+                            <Tooltip label="Copied Wave">
+                                
+                                
+                                <IconCheck size={16} />
+                                </Tooltip>
+                            </>
+                          ) : (
+                            <>
+                      <Tooltip label="Share your Wave">
+                              
+                               
+                                <IconScreenShare size={16} />
+                                </Tooltip>
+                            </>
+                          )}
+                        </Button>
+                      )}
+                    </CopyButton>
 
+        </Group>
+        <Space h="md" />
         <Paper shadow="xl" radius="md" p="xl">
           <Text
     fz="sm"

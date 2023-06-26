@@ -102,7 +102,7 @@ export const NotificationsPage = () => {
 
             notifications.map((notification, index) => (
               <>
-              <Divider className={classes.main} my="sm" />
+             <Paper shadow="sm" p="xl" withBorder>
                 <Group className={classes.main} >
                   <UnstyledButton
                     onClick={() => {
@@ -376,7 +376,7 @@ export const NotificationsPage = () => {
                     )}
                    
                 </Group>
-                
+                </Paper>
               </>
             ))
           )}
