@@ -41,6 +41,7 @@ import {
   IconSettings,
   IconScriptPlus,
   IconScriptMinus,
+  IconMessageShare
 } from "@tabler/icons-react";
 import { useDisclosure } from "@mantine/hooks";
 import { SetUsername } from "../components/SetUsername";
@@ -345,6 +346,20 @@ export const Profile = () => {
                     key={index}
                     className={classes.comment}
                   >
+                    <Group position="right">
+                  <Tooltip label="Go to Post">
+                <ActionIcon  color="blue" size="sm" variant="light"
+          onClick={() => {
+            navigate(
+              `/post/${post.PostHashHex}`
+            );
+          }}
+         
+        >
+<IconMessageShare />
+</ActionIcon>
+</Tooltip>
+</Group>
                     <Center>
                       {post.ProfileEntryResponse &&
                       post.ProfileEntryResponse.ExtraData
@@ -419,6 +434,20 @@ export const Profile = () => {
                         key={post.RepostedPostEntryResponse.PostHashHex}
                         className={classes.comment}
                       >
+                        <Group position="right">
+                  <Tooltip label="Go to Post">
+                <ActionIcon  color="blue" size="sm" variant="light"
+          onClick={() => {
+            navigate(
+              `/post/${post.RepostedPostEntryResponse.PostHashHex}`
+            );
+          }}
+         
+        >
+<IconMessageShare />
+</ActionIcon>
+</Tooltip>
+</Group>
                         <Center>
                           <ActionIcon
                             onClick={() => {

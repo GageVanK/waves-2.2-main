@@ -8,6 +8,7 @@ import {
   IconMessageCircle,
   IconScriptPlus,
   IconScriptMinus,
+  IconMessageShare
 } from "@tabler/icons-react";
 import {
   getFollowersForUser,
@@ -550,9 +551,23 @@ export const Wave = () => {
                 radius="md"
                 p="xl"
                 withBorder
-                key={index}
+                key={post.PostHashHex}
                 className={classes.comment}
               >
+                <Group position="right">
+                  <Tooltip label="Go to Post">
+                <ActionIcon  color="blue" size="sm" variant="light"
+          onClick={() => {
+            navigate(
+              `/post/${post.PostHashHex}`
+            );
+          }}
+         
+        >
+<IconMessageShare />
+</ActionIcon>
+</Tooltip>
+</Group>
                 <Center>
                   {post.ProfileEntryResponse &&
                   post.ProfileEntryResponse.ExtraData?.LargeProfilePicURL ? (
@@ -625,6 +640,20 @@ export const Wave = () => {
                     key={post.RepostedPostEntryResponse.PostHashHex}
                     className={classes.comment}
                   >
+                    <Group position="right">
+                  <Tooltip label="Go to Post">
+                <ActionIcon  color="blue" size="sm" variant="light"
+          onClick={() => {
+            navigate(
+              `/post/${post.RepostedPostEntryResponse.PostHashHex}`
+            );
+          }}
+         
+        >
+<IconMessageShare />
+</ActionIcon>
+</Tooltip>
+</Group>
                     <Center>
                       <ActionIcon
                         onClick={() => {
