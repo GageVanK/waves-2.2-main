@@ -271,7 +271,40 @@ export const HotFeed = () => {
                 </Spoiler>
 
                 <Space h="md" />
+                {post.PostExtraData?.EmbedVideoURL && (
+          
+          <Group style={{ height: "750px", display: "flex", alignItems: "center", justifyContent: "center" }}>
+  
+  <iframe style={{ height: "100%", border: "none", borderRadius: "8px" }} title="embed" src={post.PostExtraData.EmbedVideoURL} />
+</Group>
 
+
+        )}
+   {post.VideoURLs && (
+                  <iframe
+                    style={{ width: "100%", height: "100%" }}
+                    src={post.VideoURLs}
+                    title={post.PostHashHex}
+                  />
+                )}
+
+                {post.ImageURLs && (
+                  <Group position="center">
+                    <UnstyledButton
+                      onClick={() => {
+                        setSelectedImage(post.ImageURLs[0]);
+                        open();
+                      }}
+                    >
+                      <Image
+                        src={post.ImageURLs[0]}
+                        radius="md"
+                        alt="post-image"
+                        fit="contain"
+                      />
+                    </UnstyledButton>
+                  </Group>
+                )}
                 {post.RepostedPostEntryResponse && (
                   <Paper
                     m="md"
@@ -362,6 +395,15 @@ export const HotFeed = () => {
                     </Spoiler>
 
                     <Space h="md" />
+                    {post.RepostedPostEntryResponse.PostExtraData?.EmbedVideoURL && (
+          
+          <Group style={{ height: "750px", display: "flex", alignItems: "center", justifyContent: "center" }}>
+  
+  <iframe style={{ height: "100%", border: "none", borderRadius: "8px" }} title="embed" src={post.RepostedPostEntryResponse.PostExtraData.EmbedVideoURL} />
+</Group>
+
+
+        )}
                     {post.RepostedPostEntryResponse.VideoURLs && (
                       <iframe
                         style={{ width: "100%", height: "100%" }}
@@ -394,31 +436,7 @@ export const HotFeed = () => {
                   </Paper>
                 )}
 
-                {post.VideoURLs && (
-                  <iframe
-                    style={{ width: "100%", height: "100%" }}
-                    src={post.VideoURLs}
-                    title={post.PostHashHex}
-                  />
-                )}
-
-                {post.ImageURLs && (
-                  <Group position="center">
-                    <UnstyledButton
-                      onClick={() => {
-                        setSelectedImage(post.ImageURLs[0]);
-                        open();
-                      }}
-                    >
-                      <Image
-                        src={post.ImageURLs[0]}
-                        radius="md"
-                        alt="post-image"
-                        fit="contain"
-                      />
-                    </UnstyledButton>
-                  </Group>
-                )}
+             
 
                 <Space h="md" />
 
