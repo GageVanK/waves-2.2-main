@@ -428,27 +428,28 @@ export function MantineNavBar() {
                       setActive(post);
                     }}
                   >
-                    <Group noWrap style={{ display: "flex" }}>
-                      <Space w={1} />
-                      <Avatar
-                        radius="xl"
-                        size="sm"
-                        src={
-                          post.ExtraData?.LargeProfilePicURL ||
-                          `https://node.deso.org/api/v0/get-single-profile-picture/${post.PublicKeyBase58Check}` ||
-                          null
-                        }
-                      />
+ <Group style={{ flex: 1 }} noWrap>
+                            <Space w={1} />
+                            <Avatar
+                              radius="xl"
+                              size="sm"
+                              src={
+                                post.ExtraData?.LargeProfilePicURL ||
+                                `https://node.deso.org/api/v0/get-single-profile-picture/${post.PublicKeyBase58Check}` ||
+                                null
+                              }
+                            />
 
-                      <span>
-                        <Text fz="xs" fw={500} truncate lineClamp={1}>
-                          {post.Username}
-                        </Text>
-                      </span>
-                      <Space w="lg" />
-                      <Group postition="right">
-                        <RxDotFilled size={22} color="red" />{" "}
-                      </Group>
+                            <span>
+                              <Text fz="xs" fw={500} truncate lineClamp={1}>
+                                {post.Username}
+                              </Text>
+                            </span>
+                          </Group>
+                          <Space w="lg" />
+                          <Group postition="right">
+                            <RxDotFilled size={22} color="red" />{" "}
+                          </Group>
                     </Group>
                   </Navbar.Section>
                 </div>
