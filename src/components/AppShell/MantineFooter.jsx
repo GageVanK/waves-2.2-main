@@ -6,8 +6,10 @@ import {
   ActionIcon,
   Group,
   getStylesRef,
+  Text, 
+  Space
 } from "@mantine/core";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import {
   IconBellRinging,
   IconUser,
@@ -19,7 +21,7 @@ import { RxCardStackPlus } from "react-icons/rx";
 import { SignAndSubmitTx } from "../../routes/sign-and-submit-tx";
 import { useNavigate } from "react-router-dom";
 import { DeSoIdentityContext } from "react-deso-protocol";
-
+import { setNotificationMetadata, getUnreadNotificationsCount } from "deso-protocol"
 const useStyles = createStyles((theme) => ({
   footer: {
     marginTop: rem(120),
@@ -87,6 +89,32 @@ export const MantineFooter = () => {
   const navigate = useNavigate();
   const [active, setActive] = useState("Home");
   const { classes, cx } = useStyles();
+  const [unreadNotifs, setUnreadNotifs] = useState("");
+
+  useEffect(() => {
+    const fetchUnreadNotifications = async () => {
+
+      const notifData = await getUnreadNotificationsCount({
+        PublicKeyBase58Check: currentUser.PublicKeyBase58Check,
+      })
+      setUnreadNotifs(notifData.NotificationsCount)
+      console.log(notifData)
+        }
+
+    if (currentUser) {
+      
+      fetchUnreadNotifications();
+    }
+  }, []);
+
+  const updateUnreadNotification = async () =>
+  {
+    const resp = await setNotificationMetadata({
+      PublicKeyBase58Check: currentUser.PublicKeyBase58Check,
+    })
+    console.log(resp)
+  }
+  
 
   return (
     <>
@@ -165,7 +193,14 @@ export const MantineFooter = () => {
               navigate("/notifications");
             }}
           >
+            
             <IconBellRinging size="1.4rem" className={classes.actionIcon} />
+            {unreadNotifs > 0 && (
+              <>
+    <Space w={3} />
+    <Text fw={700}>{unreadNotifs}</Text>
+ </>
+  )}
           </ActionIcon>
         </Group>
       </Footer>

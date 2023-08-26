@@ -20,8 +20,8 @@ import {
   Badge,
   rem,
 } from "@mantine/core";
-
-import { useState, useContext, useEffect } from "react";
+import 'firebase/firestore';
+import { useState, useContext, useEffect , useRef} from "react";
 import { DeSoIdentityContext } from "react-deso-protocol";
 import {
   getSingleProfile,
@@ -46,6 +46,11 @@ import {
 import { useDisclosure } from "@mantine/hooks";
 import { SetUsername } from "../components/SetUsername";
 import { useNavigate } from "react-router";
+import { useCollectionData } from 'react-firebase-hooks/firestore';
+import { Chat } from "../components/Chat";
+
+
+
 
 const useStyles = createStyles((theme) => ({
   comment: {
@@ -69,6 +74,7 @@ const useStyles = createStyles((theme) => ({
     }`,
   },
 }));
+
 
 export const Profile = () => {
   const { classes } = useStyles();
@@ -320,7 +326,9 @@ export const Profile = () => {
               )}
             </Center>
           </Card>
+          <Space h="xl" />
 
+<Chat />
           <Space h="xl" />
 
           <Tabs radius="sm" value={activeTab} onTabChange={setActiveTab}>
@@ -839,4 +847,6 @@ export const Profile = () => {
       )}
     </>
   );
+  
 };
+

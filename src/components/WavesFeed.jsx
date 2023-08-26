@@ -30,44 +30,38 @@ export const WavesFeed = () => {
   const { classes } = useStyles();
   const navigate = useNavigate();
   const [wavesFeed, setWavesFeed] = useState([]);
-  
-useEffect(() => {
-    const fetchWavesFeed = async () => {
-      try {
-          
-        //Getting Profiles that are following the Waves_Streams Account
-        const result = await getFollowersForUser({
-          Username: "Waves_Streams",
-          GetEntriesFollowingUsername: true, 
-          //Will have to increase as the followers increase
-          NumToFetch: 20,
-        });
-       
-        
-        setWavesFeed(Object.values(result.PublicKeyToProfileEntry))
-      } catch (error) {
-        console.log("Something went wrong:", error);
-      }
-    };
 
-    fetchWavesFeed();
+  const [streams, setStreams] = useState([]);
+
+  useEffect(() => {
+    async function fetchStreams() {
+      try {
+        const response = await fetch('https://livepeer.studio/api/stream?streamsonly=1&filters=[{"id": "isActive", "value": true}]');
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        setStreams(data);
+        console.log(data)
+      } catch (error) {
+        console.error('Error fetching streams:', error);
+      }
+    }
+
+    fetchStreams();
   }, []);
+
+
+
   
-  // Filter the posts that have non-empty WavesStreamPlaybackId and WavesStreamTitle
-  const filteredPosts = wavesFeed.filter(
-    (post) =>
-      post.ExtraData?.WavesStreamPlaybackId &&
-      post.ExtraData?.WavesStreamPlaybackId !== "" &&
-      post.ExtraData?.WavesStreamTitle &&
-      post.ExtraData?.WavesStreamTitle !== ""
-  );
+
 
 //Map through the filteredPosts to display the current livestreams 
    // Render the filtered posts or the "No Waves" message
   return (
     <div>
-      {filteredPosts.length > 0 ? (
-        filteredPosts.map((post) => (
+      {streams.length > 0 ? (
+        streams.map((post) => (
           <>
             <Paper
               m="md"
@@ -79,44 +73,21 @@ useEffect(() => {
               className={classes.comment}
             >
               <Center>
-                <ActionIcon
-                  onClick={() => {
-                    const state = {
-                      userPublicKey: post.PublicKeyBase58Check,
-                      userName: post.Username || post.PublicKeyBase58Check,
-                      description: post.Description || null,
-                      largeProfPic: post.ExtraData?.LargeProfilePicURL || null,
-                      featureImage: post.ExtraData?.FeaturedImageURL || null,
-                    };
-
-                    navigate(`/wave/${post.Username}`, {
-                      state,
-                    });
-                  }}
-                  variant="transparent"
-                >
-                  <Avatar
-                    radius="xl"
-                    size="lg"
-                    src={
-                      post.ExtraData?.LargeProfilePicURL ||
-                      `https://node.deso.org/api/v0/get-single-profile-picture/${post.PublicKeyBase58Check}` ||
-                      null
-                    }
-                  />
-                  <Space w="xs" />
+                <ActionIcon>
+                
+               
                   <Text weight="bold" size="sm">
-                    {post.Username}
+                    {streams.name}
                   </Text>
                 </ActionIcon>
               </Center>
               <Space h="xl" />
               <Player
-             style={{ width: '100%' }}
-                playbackId={post.ExtraData.WavesStreamPlaybackId}
-                title={post.ExtraData.WavesStreamTitle}
-                
-              />
+                  title={streams.name}
+                  playbackId={streams.playbackId}
+                  autoPlay
+                  muted
+                />
             </Paper>
           </>
         ))

@@ -1,4 +1,4 @@
-import { Space, Center, Badge, Text, Divider } from "@mantine/core";
+import { Space, Center, Badge, Text, Divider,Paper } from "@mantine/core";
 import { DeSoIdentityContext } from "react-deso-protocol";
 import { useContext } from "react";
 
@@ -23,6 +23,12 @@ export const Wallet = () => {
       <Space h="xl" />
       <div>
         {currentUser ? (
+          <>
+           <Paper shadow="xl" radius="lg" p="lg" withBorder>
+      <Text align="center">When Your logged into Your DeSo Account 50% of Fees are paid back to your DeSo Wallet</Text>
+      
+    </Paper>
+    <Space h="md"/>
           <iframe
             title="heroswap"
             width="100%"
@@ -33,6 +39,7 @@ export const Wallet = () => {
             }}
             src={`https://heroswap.com/widget?affiliateAddress=${currentUser.PublicKeyBase58Check}`}
           />
+          </>
         ) : (
           <>
             <Center>

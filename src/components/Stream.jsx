@@ -6,6 +6,7 @@ import {
   getIsFollowing,
   updateFollowingStatus,
 } from "deso-protocol";
+import { getDisplayName } from "../helpers";
 import {
   Paper,
   Textarea,
@@ -69,13 +70,17 @@ export const Stream = () => {
       }),
     20
   );
+  
+  const username = getDisplayName(currentUser);
 
   // Allowing user to create streams via livepeers useCreateStream hook
   const {
     mutate: createStream,
     data: stream,
     status,
-  } = useCreateStream(streamName ? { name: streamName } : null);
+  } = useCreateStream( streamName
+    ? { name: streamName, username: username }
+    : null);
 
   const isLoading = useMemo(() => status === "loading", [status]);
 

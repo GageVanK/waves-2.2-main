@@ -29,7 +29,7 @@ import {
 } from "@tabler/icons-react";
 import { Link, useLocation } from "react-router-dom";
 import { DeSoIdentityContext } from "react-deso-protocol";
-import { getFollowersForUser, getIsFollowing } from "deso-protocol";
+import { getUnreadNotificationsCount, getFollowersForUser, getIsFollowing } from "deso-protocol";
 import { RiArrowRightSFill, RiArrowLeftSFill } from "react-icons/ri";
 import { RxDotFilled } from "react-icons/rx";
 const useStyles = createStyles((theme) => ({
@@ -232,8 +232,18 @@ export function MantineNavBar() {
   useEffect(() => {
     if (currentUser) {
       fetchFollowingPosts();
+      fetchUnreadNotifications();
     }
   }, [currentUser]);
+
+  const fetchUnreadNotifications = async () => {
+
+const notifData = await getUnreadNotificationsCount({
+  PublicKeyBase58Check: currentUser.PublicKeyBase58Check,
+})
+
+console.log(notifData)
+  }
 
   const links = mainLinksMockdata.map((link) => (
     <>
@@ -428,28 +438,29 @@ export function MantineNavBar() {
                       setActive(post);
                     }}
                   >
-                    <Group noWrap style={{ display: "flex" }}>
-                      <Space w={1} />
-                      <Avatar
-                        radius="xl"
-                        size="sm"
-                        src={
-                          post.ExtraData?.LargeProfilePicURL ||
-                          `https://node.deso.org/api/v0/get-single-profile-picture/${post.PublicKeyBase58Check}` ||
-                          null
-                        }
-                      />
+                  <Group style={{ flex: 1 }} noWrap>
+                            <Space w={1} />
+                            <Avatar
+                              radius="xl"
+                              size="sm"
+                              src={
+                                post.ExtraData?.LargeProfilePicURL ||
+                                `https://node.deso.org/api/v0/get-single-profile-picture/${post.PublicKeyBase58Check}` ||
+                                null
+                              }
+                            />
 
-                      <span>
-                        <Text fz="xs" fw={500} truncate lineClamp={1}>
-                          {post.Username}
-                        </Text>
-                      </span>
-                      <Space w="lg" />
-                      <Group postition="right">
-                        <RxDotFilled size={22} color="red" />{" "}
-                      </Group>
-                    </Group>
+                            <span>
+                              <Text fz="xs" fw={500} truncate lineClamp={1}>
+                                {post.Username}
+                              </Text>
+                            </span>
+                          </Group>
+                          <Space w="lg" />
+                          <Group postition="right">
+                            <RxDotFilled size={22} color="red" />{" "}
+                          </Group>
+                    
                   </Navbar.Section>
                 </div>
               ))

@@ -2,7 +2,7 @@ import { identity } from "deso-protocol";
 import { useContext, useState, useEffect } from "react";
 import { DeSoIdentityContext } from "react-deso-protocol";
 import { getDisplayName } from "../../helpers";
-import Pride from "../../assets/pride.png";
+
 import {
   createStyles,
   Menu,
@@ -210,7 +210,7 @@ export const MantineHeader = () => {
                       >
                         Waves
                       </Text>
-                      <Image src={Pride} width="55px" height="47px" />
+                      
                     </Group>
                   </UnstyledButton>
 

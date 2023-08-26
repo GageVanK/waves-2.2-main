@@ -51,7 +51,7 @@ export const NotificationsPage = () => {
           NumToFetch: 25,
           FetchStartIndex: -1,
         });
-
+console.log(notificationData)
         // Iterate through the notifications and fetch the usernames
         const updatedNotifications = await Promise.all(
           notificationData.Notifications.map(async (notification) => {

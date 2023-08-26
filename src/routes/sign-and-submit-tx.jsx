@@ -3,6 +3,7 @@ import {
   identity,
   submitPost,
   getSingleProfile,
+  uploadImage,
 } from "deso-protocol";
 import { useContext, useRef, useState } from "react";
 
@@ -20,17 +21,37 @@ import {
   Tooltip,
   Badge,
   TextInput,
+  FileButton,
+  ActionIcon
 } from "@mantine/core";
 import { getDisplayName } from "../helpers";
 import { DeSoIdentityContext } from "react-deso-protocol";
 import { Welcome } from "../components/Welcome";
 import { SetUsername } from "../components/SetUsername";
-
+import { FaImage } from 'react-icons/fa';
 export const SignAndSubmitTx = () => {
   const { currentUser, isLoading } = useContext(DeSoIdentityContext);
   const [newUsername, setNewUsername] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+  const [imageFile, setImageFile] = useState(null);
+
+  const handleUploadImage = async () => {
+    try {
+   
+       
+  
+        const response = await uploadImage({
+          UserPublicKeyBase58Check: currentUser.PublicKeyBase58Check,
+          file: imageFile
+        });
+        console.log(response);
+     
+    } catch (error) {
+      console.log("Something happened: " + error);
+    }
+  };
+
   const handleUpdateUsername = async () => {
     try {
       await updateProfile({
@@ -255,6 +276,14 @@ export const SignAndSubmitTx = () => {
                   >
                     Create
                   </Button>
+                  <Tooltip label="Upload Image">
+                  <FileButton onChange={setImageFile} accept="image/png,image/jpeg">
+          {(props) => <Button {...props}>Upload image</Button>}
+        </FileButton>
+                  
+                  </Tooltip>
+                  <Button onClick={handleUploadImage}>test</Button>
+                  
                 </Group>
               </form>
             </Paper>
