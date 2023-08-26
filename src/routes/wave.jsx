@@ -242,24 +242,42 @@ const equivalentNanosAmount = Math.floor(equivalentDeSoAmount / nanosPerDeSo);
 // Convert to an integer
 const equivalentNanosInt = Number(equivalentNanosAmount);
 
-       // Check if the user has enough balance
-       if (userDESOBalance < equivalentNanosInt) {
-        notifications.show({
-          title: 'Insufficient Funds',
-          icon: <IconX size="1.1rem" />,
-          color: 'red',
-          message: 'Hey there, please add DeSo to your Wallet!',
-        })
-        
-      } else {
-        // Proceed with the API call
-        await sendDeso( {
-          "SenderPublicKeyBase58Check": currentUser.PublicKeyBase58Check,
-          "RecipientPublicKeyOrUsername": profile.PublicKeyBase58Check,
-          "AmountNanos": equivalentNanosInt,
-          "MinFeeRateNanosPerKB": 1000
-        });
-      }
+       // Check if currentUser exists
+    if (!currentUser) {
+      notifications.show({
+        title: 'Login Required',
+        icon: <IconX size="1.1rem" />,
+        color: 'orange',
+        message: 'Please log in to subscribe.',
+      });
+    }
+    // Check if currentUser's public key matches profile's public key
+    else if (currentUser.PublicKeyBase58Check === profile.PublicKeyBase58Check) {
+      notifications.show({
+        title: 'Cannot Subscribe to Yourself',
+        icon: <IconX size="1.1rem" />,
+        color: 'yellow',
+        message: 'You cannot subscribe to yourself.',
+      });
+    }
+    // Check if the user has enough balance
+    else if (userDESOBalance < equivalentNanosInt) {
+      notifications.show({
+        title: 'Insufficient Funds',
+        icon: <IconX size="1.1rem" />,
+        color: 'red',
+        message: 'Hey there, please add DeSo to your Wallet!',
+      });
+    } else {
+      // Proceed with the API call
+      await sendDeso({
+        "SenderPublicKeyBase58Check": currentUser.PublicKeyBase58Check,
+        "RecipientPublicKeyOrUsername": profile.PublicKeyBase58Check,
+        "AmountNanos": equivalentNanosInt,
+        "MinFeeRateNanosPerKB": 1000
+      });
+    }
+
       
   
     } catch (error) {
@@ -285,23 +303,42 @@ const equivalentNanosAmount = Math.floor(equivalentDeSoAmount / nanosPerDeSo);
 // Convert to an integer
 const equivalentNanosInt = Number(equivalentNanosAmount);
 
-       // Check if the user has enough balance
-       if (userDESOBalance < equivalentNanosInt) {
-        notifications.show({
-          title: 'Insufficient Funds',
-          icon: <IconX size="1.1rem" />,
-          color: 'red',
-          message: 'Hey there, please add DeSo to your Wallet!',
-        })
-      } else {
-        // Proceed with the API call
-        await sendDeso( {
-          "SenderPublicKeyBase58Check": currentUser.PublicKeyBase58Check,
-          "RecipientPublicKeyOrUsername": profile.PublicKeyBase58Check,
-          "AmountNanos": equivalentNanosInt,
-          "MinFeeRateNanosPerKB": 1000
-        });
-      }
+        // Check if currentUser exists
+    if (!currentUser) {
+      notifications.show({
+        title: 'Login Required',
+        icon: <IconX size="1.1rem" />,
+        color: 'orange',
+        message: 'Please log in to subscribe.',
+      });
+    }
+    // Check if currentUser's public key matches profile's public key
+    else if (currentUser.PublicKeyBase58Check === profile.PublicKeyBase58Check) {
+      notifications.show({
+        title: 'Cannot Subscribe to Yourself',
+        icon: <IconX size="1.1rem" />,
+        color: 'yellow',
+        message: 'You cannot subscribe to yourself.',
+      });
+    }
+    // Check if the user has enough balance
+    else if (userDESOBalance < equivalentNanosInt) {
+      notifications.show({
+        title: 'Insufficient Funds',
+        icon: <IconX size="1.1rem" />,
+        color: 'red',
+        message: 'Hey there, please add DeSo to your Wallet!',
+      });
+    } else {
+      // Proceed with the API call
+      await sendDeso({
+        "SenderPublicKeyBase58Check": currentUser.PublicKeyBase58Check,
+        "RecipientPublicKeyOrUsername": profile.PublicKeyBase58Check,
+        "AmountNanos": equivalentNanosInt,
+        "MinFeeRateNanosPerKB": 1000
+      });
+    }
+
 
     } catch (error) {
       console.error("Error subscribing to User:", error);
@@ -326,23 +363,42 @@ const equivalentNanosAmount = Math.floor(equivalentDeSoAmount / nanosPerDeSo);
 // Convert to an integer
 const equivalentNanosInt = Number(equivalentNanosAmount);
 
-       // Check if the user has enough balance
-       if (userDESOBalance < equivalentNanosInt) {
-        notifications.show({
-          title: 'Insufficient Funds',
-          icon: <IconX size="1.1rem" />,
-          color: 'red',
-          message: 'Hey there, please add DeSo to your Wallet!',
-        })
-      } else {
-        // Proceed with the API call
-        await sendDeso( {
-          "SenderPublicKeyBase58Check": currentUser.PublicKeyBase58Check,
-          "RecipientPublicKeyOrUsername": profile.PublicKeyBase58Check,
-          "AmountNanos": equivalentNanosInt,
-          "MinFeeRateNanosPerKB": 1000
-        });
-      }
+        // Check if currentUser exists
+    if (!currentUser) {
+      notifications.show({
+        title: 'Login Required',
+        icon: <IconX size="1.1rem" />,
+        color: 'orange',
+        message: 'Please log in to subscribe.',
+      });
+    }
+    // Check if currentUser's public key matches profile's public key
+    else if (currentUser.PublicKeyBase58Check === profile.PublicKeyBase58Check) {
+      notifications.show({
+        title: 'Cannot Subscribe to Yourself',
+        icon: <IconX size="1.1rem" />,
+        color: 'yellow',
+        message: 'You cannot subscribe to yourself.',
+      });
+    }
+    // Check if the user has enough balance
+    else if (userDESOBalance < equivalentNanosInt) {
+      notifications.show({
+        title: 'Insufficient Funds',
+        icon: <IconX size="1.1rem" />,
+        color: 'red',
+        message: 'Hey there, please add DeSo to your Wallet!',
+      });
+    } else {
+      // Proceed with the API call
+      await sendDeso({
+        "SenderPublicKeyBase58Check": currentUser.PublicKeyBase58Check,
+        "RecipientPublicKeyOrUsername": profile.PublicKeyBase58Check,
+        "AmountNanos": equivalentNanosInt,
+        "MinFeeRateNanosPerKB": 1000
+      });
+    }
+
 
     } catch (error) {
       console.error("Error subscribing to User:", error);
@@ -589,8 +645,9 @@ const equivalentNanosInt = Number(equivalentNanosAmount);
           <Space h='md'/>
           <Center><IconHeartHandshake size='2.3rem'/></Center>
           <Space h='md'/>
+          <Center>
     <Grid>
-    <Grid.Col span={4}><Paper  shadow="xl" p="xl" withBorder>
+    <Grid.Col lg={4} sm={7} ><Paper  shadow="xl" p="xl" withBorder>
     <List  >
     
 
@@ -608,7 +665,7 @@ const equivalentNanosInt = Number(equivalentNanosAmount);
     </Button>
     </Center>
     </Paper></Grid.Col>
-    <Grid.Col span={4}><Paper shadow="xl" p="xl" withBorder>
+    <Grid.Col lg={4} sm={7} ><Paper shadow="xl" p="xl" withBorder>
     <List >
     
 
@@ -626,7 +683,7 @@ const equivalentNanosInt = Number(equivalentNanosAmount);
     </Button>
     </Center>
     </Paper></Grid.Col>
-    <Grid.Col span={4}><Paper  shadow="xl" p="xl" withBorder>
+    <Grid.Col lg={4}   sm={7} ><Paper  shadow="xl" p="xl" withBorder>
     <List >
     
     <Text fw={700} align="center">Tier 3</Text>
@@ -644,6 +701,7 @@ const equivalentNanosInt = Number(equivalentNanosAmount);
     </Center>
     </Paper></Grid.Col>
     </Grid>
+    </Center>
     
    
     
