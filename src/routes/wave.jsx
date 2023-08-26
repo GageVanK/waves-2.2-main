@@ -9,8 +9,12 @@ import {
   IconScriptPlus,
   IconScriptMinus,
   IconMessageShare,
-  IconScreenShare, IconCheck
+  IconScreenShare, 
+  IconCheck,
+  IconHeartHandshake,
+  IconX
 } from "@tabler/icons-react";
+import { GiWaveCrest } from "react-icons/gi";
 import {
   getFollowersForUser,
   getPostsForUser,
@@ -22,10 +26,13 @@ import {
   submitPost,
   createPostAssociation,
   sendDiamonds,
+  sendDeso, 
+  getExchangeRates
 } from "deso-protocol";
 import {
+  Grid,
   CopyButton,
-
+  Popover, 
   Avatar,
   Paper,
   Group,
@@ -48,7 +55,9 @@ import {
   Textarea,
   Collapse,
   UnstyledButton,
+  List
 } from "@mantine/core";
+import { notifications } from '@mantine/notifications';
 import { DeSoIdentityContext } from "react-deso-protocol";
 import { RiUserUnfollowLine } from "react-icons/ri";
 import { useDisclosure } from "@mantine/hooks";
@@ -106,7 +115,11 @@ export const Wave = () => {
   const [isFollowingUser, setisFollowingUser] = useState(false);
   const [selectedImage, setSelectedImage] = useState("");
   const [opened, { open, close }] = useDisclosure(false);
-
+ 
+  const [openedSub, { open: openSub, close: closeSub }] = useDisclosure(false);
+   // Retrieve the user's DESO balance from profile.DESOBalanceNanos
+   const userDESOBalance = profile.DESOBalanceNanos;
+   console.log(userDESOBalance)
   useEffect(() => {
     const fetchProfile = async () => {
       try {
@@ -208,6 +221,131 @@ export const Wave = () => {
       setPosts(postData.Posts);
     } catch (error) {
       console.error("Error fetching user posts:", error);
+    }
+  };
+  const subTier1 = async () => {
+    try {
+     
+      const exchangeRateData = await getExchangeRates({"PublicKeyBase58Check": profile.PublicKeyBase58Check});
+      console.log(exchangeRateData)
+
+      const subscriptionAmount = 5; // $5 USD
+      const usdCentsPerDeSoExchangeRate = exchangeRateData.USDCentsPerDeSoCoinbase;
+      const nanosPerDeSo = 0.000000001; // 1 Nano is 0.000000001 DeSo
+  
+      // Calculate the equivalent amount in DeSo
+      const equivalentDeSoAmount = subscriptionAmount * 100 / usdCentsPerDeSoExchangeRate;
+  
+      // Calculate the equivalent amount in Nanos
+const equivalentNanosAmount = Math.floor(equivalentDeSoAmount / nanosPerDeSo);
+
+// Convert to an integer
+const equivalentNanosInt = Number(equivalentNanosAmount);
+
+       // Check if the user has enough balance
+       if (userDESOBalance < equivalentNanosInt) {
+        notifications.show({
+          title: 'Insufficient Funds',
+          icon: <IconX size="1.1rem" />,
+          color: 'red',
+          message: 'Hey there, please add DeSo to your Wallet!',
+        })
+        
+      } else {
+        // Proceed with the API call
+        await sendDeso( {
+          "SenderPublicKeyBase58Check": currentUser.PublicKeyBase58Check,
+          "RecipientPublicKeyOrUsername": profile.PublicKeyBase58Check,
+          "AmountNanos": equivalentNanosInt,
+          "MinFeeRateNanosPerKB": 1000
+        });
+      }
+      
+  
+    } catch (error) {
+      console.error("Error subscribing to User:", error);
+    }
+  };
+
+  const subTier2 = async () => {
+    try {
+      const exchangeRateData = await getExchangeRates({"PublicKeyBase58Check": profile.PublicKeyBase58Check});
+      console.log(exchangeRateData)
+
+      const subscriptionAmount = 15; // $5 USD
+      const usdCentsPerDeSoExchangeRate = exchangeRateData.USDCentsPerDeSoCoinbase;
+      const nanosPerDeSo = 0.000000001; // 1 Nano is 0.000000001 DeSo
+  
+      // Calculate the equivalent amount in DeSo
+      const equivalentDeSoAmount = subscriptionAmount * 100 / usdCentsPerDeSoExchangeRate;
+  
+      // Calculate the equivalent amount in Nanos
+const equivalentNanosAmount = Math.floor(equivalentDeSoAmount / nanosPerDeSo);
+
+// Convert to an integer
+const equivalentNanosInt = Number(equivalentNanosAmount);
+
+       // Check if the user has enough balance
+       if (userDESOBalance < equivalentNanosInt) {
+        notifications.show({
+          title: 'Insufficient Funds',
+          icon: <IconX size="1.1rem" />,
+          color: 'red',
+          message: 'Hey there, please add DeSo to your Wallet!',
+        })
+      } else {
+        // Proceed with the API call
+        await sendDeso( {
+          "SenderPublicKeyBase58Check": currentUser.PublicKeyBase58Check,
+          "RecipientPublicKeyOrUsername": profile.PublicKeyBase58Check,
+          "AmountNanos": equivalentNanosInt,
+          "MinFeeRateNanosPerKB": 1000
+        });
+      }
+
+    } catch (error) {
+      console.error("Error subscribing to User:", error);
+    }
+  };
+
+  const subTier3 = async () => {
+    try {
+      const exchangeRateData = await getExchangeRates({"PublicKeyBase58Check": profile.PublicKeyBase58Check});
+      console.log(exchangeRateData)
+
+      const subscriptionAmount = 25; // $5 USD
+      const usdCentsPerDeSoExchangeRate = exchangeRateData.USDCentsPerDeSoCoinbase;
+      const nanosPerDeSo = 0.000000001; // 1 Nano is 0.000000001 DeSo
+  
+      // Calculate the equivalent amount in DeSo
+      const equivalentDeSoAmount = subscriptionAmount * 100 / usdCentsPerDeSoExchangeRate;
+  
+      // Calculate the equivalent amount in Nanos
+const equivalentNanosAmount = Math.floor(equivalentDeSoAmount / nanosPerDeSo);
+
+// Convert to an integer
+const equivalentNanosInt = Number(equivalentNanosAmount);
+
+       // Check if the user has enough balance
+       if (userDESOBalance < equivalentNanosInt) {
+        notifications.show({
+          title: 'Insufficient Funds',
+          icon: <IconX size="1.1rem" />,
+          color: 'red',
+          message: 'Hey there, please add DeSo to your Wallet!',
+        })
+      } else {
+        // Proceed with the API call
+        await sendDeso( {
+          "SenderPublicKeyBase58Check": currentUser.PublicKeyBase58Check,
+          "RecipientPublicKeyOrUsername": profile.PublicKeyBase58Check,
+          "AmountNanos": equivalentNanosInt,
+          "MinFeeRateNanosPerKB": 1000
+        });
+      }
+
+    } catch (error) {
+      console.error("Error subscribing to User:", error);
     }
   };
 
@@ -396,7 +534,7 @@ export const Wave = () => {
           {profile !== null ? (
             <>
               <Text fz="lg" fw={777} variant="gradient" truncate>
-                {userName}'s Wave
+                {userName}
               </Text>
             </>
           ) : (
@@ -439,6 +577,78 @@ export const Wave = () => {
         </Card.Section>
         <Space h="md" />
         <Group position="right">
+
+      
+
+      
+        <Button rightIcon={<GiWaveCrest size="1rem" />} onClick={openSub}>Subscribe</Button>
+        <Modal size="auto" opened={openedSub} onClose={closeSub} centered transitionProps={{ transition: 'fade' }}>
+        <Paper shadow="xl" p="xl" withBorder>
+          
+          <Text fw={700} c="dimmed" align='center'> Join {userName}'s Wave and Subscribe to contribute to their growth.</Text>
+          <Space h='md'/>
+          <Center><IconHeartHandshake size='2.3rem'/></Center>
+          <Space h='md'/>
+    <Grid>
+    <Grid.Col span={4}><Paper  shadow="xl" p="xl" withBorder>
+    <List  >
+    
+
+    <Text fw={700} align="center">Tier 1</Text>
+    <Divider my="sm" />
+    <Space h="md" />
+      <List.Item><Text size='xs'>1-Month Subcription</Text></List.Item>
+      <List.Item><Text size='xs'>1-Wave Point</Text></List.Item>
+      <List.Item><Text size='xs'>1-Month Subscriber NFT</Text></List.Item>
+    </List>
+    <Space h="md" />
+    <Center>
+        <Button onClick={subTier1} variant="light" radius="md" fullWidth>
+      $5.00
+    </Button>
+    </Center>
+    </Paper></Grid.Col>
+    <Grid.Col span={4}><Paper shadow="xl" p="xl" withBorder>
+    <List >
+    
+
+    <Text fw={700} align="center">Tier 2</Text>
+    <Divider my="sm" />
+    <Space h="md" />
+      <List.Item><Text size='xs'>3-Month Subcription</Text></List.Item>
+      <List.Item><Text size='xs'>3-Wave Points</Text></List.Item>
+      <List.Item><Text size='xs'>3-Month Subscriber NFT</Text></List.Item>
+    </List>
+    <Space h="md" />
+    <Center>
+        <Button onClick={subTier2} variant="light" radius="md" fullWidth>
+      $15.00
+    </Button>
+    </Center>
+    </Paper></Grid.Col>
+    <Grid.Col span={4}><Paper  shadow="xl" p="xl" withBorder>
+    <List >
+    
+    <Text fw={700} align="center">Tier 3</Text>
+    <Divider my="sm" />
+    <Space h="md" />
+      <List.Item><Text size='xs'>6-Month Subcription</Text></List.Item>
+      <List.Item><Text size='xs'>6-Wave Points</Text></List.Item>
+      <List.Item><Text size='xs'>6-Month Subscriber NFT</Text></List.Item>
+    </List>
+    <Space h="md" />
+    <Center>
+        <Button onClick={subTier3} variant="light" radius="md" fullWidth>
+      $25.00
+    </Button>
+    </Center>
+    </Paper></Grid.Col>
+    </Grid>
+    
+   
+    
+    </Paper>
+      </Modal>
         <CopyButton
                       value={`https://waves-2.vercel.app/wave/${userName}`}
                       timeout={2000}
@@ -459,7 +669,7 @@ export const Wave = () => {
                             </>
                           ) : (
                             <>
-                      <Tooltip label="Share your Wave">
+                      <Tooltip label="Share their Wave with this Link">
                               
                                
                                 <IconScreenShare size={16} />
