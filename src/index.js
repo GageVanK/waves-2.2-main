@@ -13,6 +13,7 @@ import { MantineProvider } from "@mantine/core";
 import { Wave } from "./routes/wave";
 import { User } from "./routes/user";
 import { PostPage } from "./routes/post-page";
+import { Notifications } from '@mantine/notifications';
 import {
   LivepeerConfig,
   createReactClient,
@@ -20,6 +21,11 @@ import {
 } from "@livepeer/react";
 
 import { DeSoIdentityProvider } from "react-deso-protocol";
+
+
+
+
+
 
 const livepeerClient = createReactClient({
   provider: studioProvider({
@@ -82,6 +88,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         withGlobalStyles
         withNormalizeCSS
       >
+          <Notifications />
         <DeSoIdentityProvider>
           <RouterProvider router={router} />
         </DeSoIdentityProvider>
