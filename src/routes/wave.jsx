@@ -247,7 +247,7 @@ const equivalentNanosInt = Number(equivalentNanosAmount);
       notifications.show({
         title: 'Login Required',
         icon: <IconX size="1.1rem" />,
-        color: 'orange',
+        color: 'red',
         message: 'Please log in to subscribe.',
       });
     }
@@ -256,7 +256,7 @@ const equivalentNanosInt = Number(equivalentNanosAmount);
       notifications.show({
         title: 'Cannot Subscribe to Yourself',
         icon: <IconX size="1.1rem" />,
-        color: 'yellow',
+        color: 'red',
         message: 'You cannot subscribe to yourself.',
       });
     }
@@ -308,7 +308,7 @@ const equivalentNanosInt = Number(equivalentNanosAmount);
       notifications.show({
         title: 'Login Required',
         icon: <IconX size="1.1rem" />,
-        color: 'orange',
+        color: 'red',
         message: 'Please log in to subscribe.',
       });
     }
@@ -317,7 +317,7 @@ const equivalentNanosInt = Number(equivalentNanosAmount);
       notifications.show({
         title: 'Cannot Subscribe to Yourself',
         icon: <IconX size="1.1rem" />,
-        color: 'yellow',
+        color: 'red',
         message: 'You cannot subscribe to yourself.',
       });
     }
@@ -368,7 +368,7 @@ const equivalentNanosInt = Number(equivalentNanosAmount);
       notifications.show({
         title: 'Login Required',
         icon: <IconX size="1.1rem" />,
-        color: 'orange',
+        color: 'red',
         message: 'Please log in to subscribe.',
       });
     }
@@ -377,7 +377,7 @@ const equivalentNanosInt = Number(equivalentNanosAmount);
       notifications.show({
         title: 'Cannot Subscribe to Yourself',
         icon: <IconX size="1.1rem" />,
-        color: 'yellow',
+        color: 'red',
         message: 'You cannot subscribe to yourself.',
       });
     }
